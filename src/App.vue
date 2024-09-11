@@ -1,26 +1,70 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container pt-5">
+    <div class="wrapper">
+      <div>
+        <app-left-block @form-data="onAddBlock">
+
+        </app-left-block>
+      </div>
+      <app-right-block :block-value="blockValue">
+
+      </app-right-block>
+    </div>
+    <button
+        class="btn primary comments-btn"
+        v-if="comments.length < 1"
+        @click="getComments">
+      Загрузить комментарий
+    </button>
+    <app-comments v-else :comments="comments">
+
+    </app-comments>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AppLeftBlock from './AppLeftBlock';
+import AppRightBlock from './AppRightBlock';
+import AppComments from './AppComments';
+import axios from "axios";
 
 export default {
   name: 'App',
+  data() {
+    return {
+      blockValue: [],
+      comments: [],
+      isLoading: false,
+    }
+  },
   components: {
-    HelloWorld
+    AppLeftBlock,
+    AppRightBlock,
+    AppComments
+  },
+  methods: {
+    onAddBlock(e) {
+      this.blockValue.push(e)
+    },
+    async getComments() {
+      this.isLoading = true
+
+      try {
+        const {data} = await axios.get('https://jsonplaceholder.typicode.com/comments?limit=50')
+        this.comments = data.slice(0, 20)
+        this.isLoading = false
+      } catch (e) {
+        this.isLoading = false
+      }
+    }
   }
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px
 }
 </style>

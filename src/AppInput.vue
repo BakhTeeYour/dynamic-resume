@@ -6,24 +6,42 @@
         :id="id"
         :placeholder="placeholder"
         :value="value"
-        @input="change"
+        @input="$emit('update:value', $event.target.value)"
     >
     <small v-if="error">{{ error }}</small>
   </div>
 </template>
 
 <script>
+import { useId } from 'vue'
+const id = useId()
 export default {
   emits: ['update:value'],
-  props: ['error', 'placeholder', 'type', 'value', 'label'],
-  data() {
-    return {
-      id: 'input' + Math.random()
+  props: {
+    error: {
+      type: String,
+      default: '',
+    },
+    placeholder: {
+      type: String,
+      default: 'Введите значение'
+    },
+    type: {
+      type: String,
+      required: true
+    },
+    value: {
+      type: [String, Number],
+      required: true,
+    },
+    label: {
+      type: String,
+      default: '',
     }
   },
-  methods: {
-    change(event) {
-      this.$emit('update:value', event.target.value)
+  data() {
+    return {
+      id
     }
   }
 }

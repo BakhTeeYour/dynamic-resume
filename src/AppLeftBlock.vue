@@ -3,11 +3,11 @@
     <app-select
         label="Тип блока"
         :options="BlockTypeOptions"
-        v-model:value="blockType"
+        v-model="blockType"
     ></app-select>
     <app-text-area
         type="text"
-        v-model:value="inputValue"
+        v-model="inputValue"
         label="Значение"
         rows="3"
         placeholder="Введите значение"

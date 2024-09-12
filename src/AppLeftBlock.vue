@@ -9,7 +9,7 @@
         type="text"
         v-model="inputValue"
         label="Значение"
-        rows="3"
+        :rows="3"
         placeholder="Введите значение"
     ></app-text-area>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="form-control">
     <label :for="id">{{ label }}</label>
-    <select :id="id" :value="modelValue" @input="$emit('update:ModelValue', $event.target.value)">
+    <select :id="id" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">
       <option v-if="placeholder" value="" disabled selected>{{ placeholder}}</option>
       <option v-for="option in options" :value="option.value" :key="option.id">
         {{ option.label }}
@@ -15,7 +15,7 @@
 import {useId} from 'vue'
 const id = useId()
 export default {
-  emits: ['update:ModelValue'],
+  emits: ['update:modelValue'],
   props: {
     options: {
       type: Array,
